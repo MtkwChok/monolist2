@@ -9,11 +9,15 @@ class OwnershipsController < ApplicationController
     end
 
     # itemsテーブルに存在しない場合は楽天のデータを登録する。
+    
     if @item.new_record?
+      
       # TODO 商品情報の取得 RakutenWebService::Ichiba::Item.search を用いてください
-      items = {}
+      
+      items = RakutenWebService::Ichiba::Item.search(itemCode: @item.item_code)
 
       item                  = items.first
+      #@item.asin            = item['itemCode']
       @item.title           = item['itemName']
       @item.small_image     = item['smallImageUrls'].first['imageUrl']
       @item.medium_image    = item['mediumImageUrls'].first['imageUrl']
@@ -26,15 +30,48 @@ class OwnershipsController < ApplicationController
     # params[:type]の値にHaveボタンが押された時には「Have」,
     # Wantボタンが押された時には「Want」が設定されています。
     
-
+    if params[:type] == "Have"
+     current_user.have(@item)
+    elsif params[:type] == "Want"
+      current_user.want(@item)
+    end
+    
+    #if Item.include!(item['itemCode']) and params[:type] == "Have"
+    #    current_user.have(@item)
+    #    render template: "items/_unhave"
+    #end
+    #if Item.include!(item['itemCode']) and params[:type] == "Want"
+    #    current_user.want(@item)
+    #    render template: "items/_unwant"
+    #end
+    
   end
 
   def destroy
-    @item = Item.find(params[:item_id])
-
+   
     # TODO 紐付けの解除。 
     # params[:type]の値にHave itボタンが押された時には「Have」,
     # Want itボタンが押された時には「Want」が設定されています。
-
+    
+    @item = Item.find(params[:item_id])
+    
+    if params[:type] == "Have"
+      current_user.unhave(@item)
+    elsif params[:type] == "Want"
+      current_user.unwant(@item)
+    end
+    
+    #if params[:type] == "Have"
+    #  if have?(@item)
+    #    current_user.unhave(@item)
+    #    render template: "items/_have"
+    #  end
+    #else
+    #  if want?(@item)
+    #    current_user.unwant(@item)
+    #    render template: "items/_want"
+    #  end
+    #end
+    
   end
 end
