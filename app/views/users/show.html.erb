@@ -1,4 +1,14 @@
 <%= render 'profile' , user: @user %>
 
+<% content_for :head do %>
+  <title>
+    <%= @user.name %>さんの Monolist
+  </title>
+<% end %>
+<% content_for :description do %>
+  <p>
+    <%= @user.name %>のモノページ。欲しい人、持ってる人を表示しています。
+  </p>
+<% end %>
 
 <%= render 'items/list' , items: @items %>
