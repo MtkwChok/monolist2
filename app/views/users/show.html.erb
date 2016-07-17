@@ -1,14 +1,9 @@
 <%= render 'profile' , user: @user %>
 
 <% content_for :head do %>
-  <title>
-    <%= @user.name %>さんの Monolist
-  </title>
-<% end %>
-<% content_for :description do %>
-  <p>
-    <%= @user.name %>のモノページ。欲しい人、持ってる人を表示しています。
-  </p>
+  <title><%= @user.name %>さんの monolist</title>
+  <meta name="description" content="<%= @user.name %>さんのモノページ。
+            <%= @user.name %>さんが欲しいモノ、持ってるモノを表示しています。">
 <% end %>
 
 <%= render 'items/list' , items: @items %>

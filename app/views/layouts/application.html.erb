@@ -1,15 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta name="head" content="各ページのタイトル名" /> 
   <% if content_for?(:head) %>
     <%= yield :head %>
   <% else %>
     <title>Monolist</title>
   <% end %>
-  
-  <meta name="description" content="ページの概要" />   
-  <%= yield :description %>
   
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
