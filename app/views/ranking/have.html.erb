@@ -1,0 +1,27 @@
+<div class="ranking-title">
+  <h3>Haveランキング 1-10</h3>
+</div>
+
+<div class="ranking-list">
+  <div class="table-responsive">
+    <table class="table table-striped" >
+      <thead>
+        <tr>
+          <th>順位</th>
+          <th>獲得数</th>
+          <th>商品タイトル</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @item_ids.each.with_index(1) do |i, count| %>
+        <% item = Item.find(i) %>
+          <tr>
+            <th><%= count %></th>
+            <td><%= @item_hash[i] %></td>
+            <td><%= item.title %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
